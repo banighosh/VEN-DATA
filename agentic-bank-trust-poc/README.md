@@ -111,6 +111,30 @@ Status: the parsing, fallback, prompt fencing and "rail stops an overreaching mo
 4. Run the shadow tier against real human decisions to produce the comparison evidence a model-risk committee will want.
 5. Try a research-stage private-negotiation scheme behind the same message interface, and measure what it costs.
 
+## From PoC to enterprise: what is missing
+
+The PoC proves the control logic and the way the pieces fit together. It is not a design for production. This is the honest gap list for a team deciding whether to build the real thing.
+
+| Area | In this PoC | What an enterprise build needs |
+|---|---|---|
+| Keys | Ed25519 keys generated per run, held in memory | HSM or KMS-backed keys; rotation and revocation; separate keys for each company, each agent and the operator; a controlled ceremony for the audit-signing key |
+| Agent identity (KYA) | In-memory registry with a KYB flag | Integration with the bank's KYC/KYB and legal-entity data; real credential issuance for agents; owner attestation and periodic recertification; clear lifecycle for onboarding, suspension and offboarding |
+| Mandates | A simplified signed record | A standards-based mandate format (AP2's signed mandates are the obvious one to evaluate); client-side issuance and approval workflow with maker-checker; versioning and an audit of who changed what |
+| Transport | In-process function calls | A2A and MCP endpoints with strong authentication (for example mTLS), schema validation, rate limiting and abuse controls |
+| Policy | Python rules and a two-country list | Versioned, reviewable policy-as-code; sanctions and jurisdiction screening through the bank's screening platform and official lists; limits tied to credit and risk systems, including exposure across products and netting |
+| Settlement | In-memory single-currency ledger; FX spread only | Real rails (RTGS, payments hub, card or stablecoin legs); multi-currency; the principal exchange; cut-off times, failures, reversals; escrow and milestone release |
+| Reconciliation | Per-deal check right after posting | Independent reconciliation against the book of record and statements, intraday and end of day; a break-handling workflow; written rules for attributing liability between the parties and the bank |
+| Audit | Hash-chained, signed log in memory | Durable append-only storage; the chain head anchored somewhere the operator cannot rewrite; retention rules; access control; exports for supervisors; handling of confidential commercial data |
+| State and availability | None; each run starts clean | Durable state; idempotency that survives restarts and multiple instances; high availability and disaster recovery |
+| Human approval | A callback that must name the agent's owner | Integration with enterprise workflow and single sign-on; step-up authentication; delegation, escalation and time limits |
+| Operations | CLI output | Metrics, alerting, runbooks; governance for the kill switch (who may trip it, who may release it, dual control) |
+| Model risk and supervision | A shadow tier that records would-be outcomes | Shadow runs compared against human decisions at scale; an evidence pack mapped to the bank's own model-risk framework and the regulators it answers to. Supervisory expectations for agentic AI are still moving, so confirm the current position for each jurisdiction rather than assuming it |
+| Security assurance | Unit, scenario and mutation tests | Threat modelling, penetration testing, protocol fuzzing, red-teaming of LLM agents with prompt-injection suites, supply-chain controls |
+| Private negotiation | Not built | Evaluate research-stage approaches against real cost and latency before committing |
+| Agent quality | Rule-based agents; optional Claude agent, untested live | An evaluation harness with adversarial counterparties; cost, latency and fallback behaviour measured; a decision on which tasks an LLM should decide at all |
+
+**A sensible path.** (1) Pick one narrow product, such as FX forward quotes between two known counterparties. (2) Build it behind the real identity and mandate systems in shadow mode, with no money moving. (3) Compare agent decisions with human ones and fix the gaps. (4) Only then move to execute-with-approval, and to autonomy within tight bounds last.
+
 ## Layout
 
 ```
@@ -123,6 +147,7 @@ trustlayer/
   world.py       builds the cast                                       scenarios.py  the 17 scenarios + control map
   cli.py         demo | controls | audit | list
 tests/           unit, protocol, scenario and mutation tests
+LICENSE          Apache License 2.0
 .claude/         control-reviewer subagent and /add-scenario command for Claude Code
 ```
 
@@ -133,3 +158,7 @@ tests/           unit, protocol, scenario and mutation tests
 - The clock is fake and advances one second per read, so runs are reproducible.
 - Keys are generated per run and held in memory. A real deployment needs HSM-backed keys, rotation and an externally anchored audit head.
 - The restricted-country list has two entries and is illustrative. Real screening uses official lists and a screening platform.
+
+## License
+
+Licensed under the Apache License 2.0. See `LICENSE`. Add your own copyright line if you want one; the license text does not require it. All names of institutions and people in the demo are fictional.
