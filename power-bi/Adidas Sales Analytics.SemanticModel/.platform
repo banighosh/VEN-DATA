@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Adidas Sales Analytics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "da850542-69b8-5cd6-ab95-f839e62a42ad"
+  }
+}

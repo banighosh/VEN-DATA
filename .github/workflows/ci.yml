@@ -1,0 +1,52 @@
+name: web-platform CI
+
+# Manual trigger: Actions tab → "web-platform CI" → Run workflow.
+# Once a run is green, add `push:` / `pull_request:` triggers with
+# paths: ["web-platform/**", "data/**", ".github/workflows/**"].
+on:
+  workflow_dispatch:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web-platform/backend
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env: { POSTGRES_DB: bi_test, POSTGRES_USER: bi, POSTGRES_PASSWORD: bi }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U bi" --health-interval 5s --health-timeout 3s --health-retries 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+      - run: pip install -r requirements-dev.txt
+      - run: pytest
+        env:
+          TEST_DATABASE_URL: postgresql+psycopg://bi:bi@localhost:5432/bi_test
+          # Runs the dataset-level checks against the Adidas workbook in /data
+          ADIDAS_XLSX: ${{ github.workspace }}/data/Adidas US Sales Datasets.xlsx
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web-platform/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "22" }
+      - run: npm install && npm run typecheck && npm run build
+
+  images:
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    defaults:
+      run:
+        working-directory: web-platform
+    steps:
+      - uses: actions/checkout@v4
+      - run: cp .env.example .env && docker compose build

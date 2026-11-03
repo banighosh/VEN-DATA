@@ -1,0 +1,4 @@
+cryptography>=42
+pytest>=8
+# Optional: lets a Claude model negotiate (python -m trustlayer demo -s happy_path_fx_forward --claude)
+# anthropic>=0.40

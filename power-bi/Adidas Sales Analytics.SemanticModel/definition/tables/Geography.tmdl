@@ -1,0 +1,49 @@
+table Geography
+	lineageTag: 42cce4b8-0a51-5079-82a7-9df44b995d43
+
+	column 'City Key'
+		dataType: string
+		isHidden
+		lineageTag: e850725a-bd24-541b-a86e-1549933e6422
+		summarizeBy: none
+		sourceColumn: City Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		lineageTag: 83c9dbcf-19b5-5247-86b7-4751c799cc16
+		dataCategory: City
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		lineageTag: 710d2034-2fce-5385-8175-149736138f63
+		dataCategory: StateOrProvince
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column Region
+		dataType: string
+		lineageTag: bf05c9ab-1b34-56d0-ad5a-ff3534f69bfa
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Geography = m
+		mode: import
+		source =
+				let
+				    Source = Sales,
+				    Columns = Table.SelectColumns(Source, {"City Key", "City", "State", "Region"}),
+				    Distinct = Table.Distinct(Columns, {"City Key"})
+				in
+				    Distinct
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,21 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["ExcelFilePath","Sales","Product","Retailer","Geography","Sales Method"]
+
+ref table Sales
+ref table Product
+ref table Retailer
+ref table Geography
+ref table 'Sales Method'
+ref table Calendar
+ref table _Measures
+

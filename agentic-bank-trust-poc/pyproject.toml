@@ -1,0 +1,14 @@
+[project]
+name = "agentic-bank-trust-poc"
+version = "0.1.0"
+description = "Proof of concept: a bank-operated trust layer for cross-company agent-to-agent commerce"
+requires-python = ">=3.10"
+dependencies = ["cryptography>=42"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+claude = ["anthropic>=0.40"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

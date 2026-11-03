@@ -1,0 +1,46 @@
+table Product
+	lineageTag: 102bddc6-4dbf-51bf-be5a-2b596411a45f
+
+	column Product
+		dataType: string
+		lineageTag: a218f027-4160-5c53-bce8-3fd1d91ac84f
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Category'
+		dataType: string
+		lineageTag: 24d65ace-78da-56af-8928-c6b248c62a13
+		summarizeBy: none
+		sourceColumn: Product Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Type'
+		dataType: string
+		lineageTag: dc61fd5b-2ed0-597a-81e1-6a3b3802fd5c
+		summarizeBy: none
+		sourceColumn: Product Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		lineageTag: 63155169-ba23-55bf-8bb7-117d144379e7
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Product = m
+		mode: import
+		source =
+				let
+				    Source = Sales,
+				    Columns = Table.SelectColumns(Source, {"Product", "Product Category", "Product Type", "Gender"}),
+				    Distinct = Table.Distinct(Columns, {"Product"})
+				in
+				    Distinct
+
+	annotation PBI_ResultType = Table
