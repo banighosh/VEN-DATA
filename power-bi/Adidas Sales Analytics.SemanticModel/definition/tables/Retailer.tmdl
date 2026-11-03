@@ -1,0 +1,22 @@
+table Retailer
+	lineageTag: 6e0906f5-1360-5f0e-bfc1-0d39ccf4c468
+
+	column Retailer
+		dataType: string
+		lineageTag: c9f113a1-1bc9-519a-aa95-c9b49ac2b0e1
+		summarizeBy: none
+		sourceColumn: Retailer
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Retailer = m
+		mode: import
+		source =
+				let
+				    Source = Sales,
+				    Columns = Table.SelectColumns(Source, {"Retailer"}),
+				    Distinct = Table.Distinct(Columns)
+				in
+				    Distinct
+
+	annotation PBI_ResultType = Table

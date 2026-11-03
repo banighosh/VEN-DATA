@@ -1,0 +1,223 @@
+table Sales
+	lineageTag: 3d82ae74-93db-52b7-ac62-efef9c822743
+
+	column 'Row ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7201e6e4-4cef-521b-8a93-4b2a84040dc8
+		summarizeBy: none
+		sourceColumn: Row ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Retailer
+		dataType: string
+		isHidden
+		lineageTag: f207d5f6-e955-537a-a64a-0bbcebfa78d0
+		summarizeBy: none
+		sourceColumn: Retailer
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Not a unique key: the same ID is shared by several retailers.
+	column 'Retailer ID'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 2009ade0-4ca9-52b0-9d77-e4d32fc3c5e7
+		summarizeBy: none
+		sourceColumn: Retailer ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Invoice Date'
+		dataType: dateTime
+		isHidden
+		formatString: Short Date
+		lineageTag: f4e69698-0aba-54f1-8fe3-52fb8bfc4bd5
+		summarizeBy: none
+		sourceColumn: Invoice Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Region
+		dataType: string
+		isHidden
+		lineageTag: 571ed472-0497-5a79-9dec-ca38860ced27
+		summarizeBy: none
+		sourceColumn: Region
+
+		annotation SummarizationSetBy = Automatic
+
+	column State
+		dataType: string
+		isHidden
+		lineageTag: 43416c62-dbba-5733-aa55-a61ec73153a0
+		summarizeBy: none
+		sourceColumn: State
+
+		annotation SummarizationSetBy = Automatic
+
+	column City
+		dataType: string
+		isHidden
+		lineageTag: f6fcccc1-2fbe-56a2-a961-6890c75cd91a
+		summarizeBy: none
+		sourceColumn: City
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'City Key'
+		dataType: string
+		isHidden
+		lineageTag: 513ff460-2e0d-59d8-80e3-aaa64bdcacd4
+		summarizeBy: none
+		sourceColumn: City Key
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product
+		dataType: string
+		isHidden
+		lineageTag: 7c4e8ee9-cc0a-551c-9ac4-836397311285
+		summarizeBy: none
+		sourceColumn: Product
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price per Unit'
+		dataType: double
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 84493b46-c112-5491-be90-3371243d9c2b
+		summarizeBy: none
+		sourceColumn: Price per Unit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Units Sold'
+		dataType: int64
+		formatString: #,0
+		lineageTag: d1a60777-4906-5cf0-84f8-b69c9de9ab0d
+		summarizeBy: sum
+		sourceColumn: Units Sold
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Revenue as reported in the source (see the Data Quality page).
+	column 'Total Sales'
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 01323ab7-6ed4-51bc-9eee-51a6330a89f3
+		summarizeBy: sum
+		sourceColumn: Total Sales
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating Profit'
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: 1f27e292-04be-5fe1-894a-a63e863f73b9
+		summarizeBy: sum
+		sourceColumn: Operating Profit
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Operating Margin'
+		dataType: double
+		formatString: 0.0%;-0.0%;0.0%
+		lineageTag: 07a2237b-bb84-5cf9-aff1-59a8d15f5a9c
+		summarizeBy: none
+		sourceColumn: Operating Margin
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sales Method'
+		dataType: string
+		isHidden
+		lineageTag: 6e28dfe4-6919-5382-ad3a-465544f02bf6
+		summarizeBy: none
+		sourceColumn: Sales Method
+
+		annotation SummarizationSetBy = Automatic
+
+	column Gender
+		dataType: string
+		isHidden
+		lineageTag: 84f99dad-52a5-5136-9e71-96b5bccec2c8
+		summarizeBy: none
+		sourceColumn: Gender
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Category'
+		dataType: string
+		isHidden
+		lineageTag: fd8fd9b1-5a19-5f50-8c80-f3287cac23c6
+		summarizeBy: none
+		sourceColumn: Product Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Product Type'
+		dataType: string
+		isHidden
+		lineageTag: 73b479b8-a689-590f-833f-eb5570c6cf0c
+		summarizeBy: none
+		sourceColumn: Product Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Price x Units'
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: a24a94cd-e948-510f-b64a-fd679ceb88f9
+		summarizeBy: sum
+		sourceColumn: Price x Units
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Whether Total Sales equals Price per Unit × Units Sold (within 1%).
+	column 'Revenue Check'
+		dataType: string
+		lineageTag: 39a620c6-3a60-5b5d-bec4-70d9c53816f4
+		summarizeBy: none
+		sourceColumn: Revenue Check
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Total Sales − Operating Profit. The source has no cost column.
+	column 'Implied Cost'
+		dataType: double
+		formatString: \$#,0;(\$#,0);\$#,0
+		lineageTag: bc655280-9f71-5e3e-a5d3-bad2d23959cc
+		summarizeBy: sum
+		sourceColumn: Implied Cost
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents(ExcelFilePath), null, true),
+				    Sheet = Source{[Item="Cleaned_Table",Kind="Sheet"]}[Data],
+				    Promoted = Table.PromoteHeaders(Sheet, [PromoteAllScalars=true]),
+				    Selected = Table.SelectColumns(Promoted, {"Retailer", "Retailer ID", "Invoice Date", "Region", "State", "City", "Product", "Price per Unit", "Units Sold", "Total Sales", "Operating Profit", "Operating Margin", "Sales Method", "Gender", "Product Category", "Product Type"}),
+				    Typed = Table.TransformColumnTypes(Selected, {{"Retailer", type text}, {"Retailer ID", Int64.Type}, {"Invoice Date", type date}, {"Region", type text}, {"State", type text}, {"City", type text}, {"Product", type text}, {"Price per Unit", type number}, {"Units Sold", Int64.Type}, {"Total Sales", type number}, {"Operating Profit", type number}, {"Operating Margin", type number}, {"Sales Method", type text}, {"Gender", type text}, {"Product Category", type text}, {"Product Type", type text}}),
+				    Trimmed = Table.TransformColumns(Typed, {{"Retailer", Text.Trim, type text}, {"Region", Text.Trim, type text}, {"State", Text.Trim, type text}, {"City", Text.Trim, type text}, {"Product", Text.Trim, type text}, {"Sales Method", Text.Trim, type text}}),
+				    WithRowId = Table.AddIndexColumn(Trimmed, "Row ID", 1, 1, Int64.Type),
+				    WithExpected = Table.AddColumn(WithRowId, "Price x Units", each [Price per Unit] * [Units Sold], type number),
+				    WithCheck = Table.AddColumn(WithExpected, "Revenue Check", each
+				        if [Price x Units] = null or [Price x Units] = 0 then "Zero price or units"
+				        else if Number.Abs([Total Sales] - [Price x Units]) <= 0.01 * [Price x Units] then "Matches price × units"
+				        else if Number.Abs([Total Sales] - 10 * [Price x Units]) <= 0.01 * 10 * [Price x Units] then "Exactly 10× price × units"
+				        else "Other mismatch", type text),
+				    WithCost = Table.AddColumn(WithCheck, "Implied Cost", each [Total Sales] - [Operating Profit], type number),
+				    WithCityKey = Table.AddColumn(WithCost, "City Key", each [City] & ", " & [State], type text)
+				in
+				    WithCityKey
+
+	annotation PBI_ResultType = Table

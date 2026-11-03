@@ -1,0 +1,55 @@
+# Meridian BI: PostgreSQL + FastAPI + React/nginx.
+#   cp .env.example .env && docker compose up --build -d
+#   open http://localhost:8080
+name: meridian-bi
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-bi}
+      POSTGRES_USER: ${POSTGRES_USER:-bi}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-bi}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-bi}
+      UPLOAD_DIR: /data/uploads
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-100}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:8080}
+      WEB_CONCURRENCY: ${WEB_CONCURRENCY:-2}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      INSIGHTS_LLM_MODEL: ${INSIGHTS_LLM_MODEL:-claude-sonnet-5-5}
+    volumes:
+      - uploads:/data/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8000"
+
+  web:
+    build: ./frontend
+    restart: unless-stopped
+    environment:
+      API_UPSTREAM: api:8000
+    ports:
+      - "${WEB_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  uploads:

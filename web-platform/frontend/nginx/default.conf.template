@@ -1,0 +1,47 @@
+# Serves the React build and reverse-proxies /api to the FastAPI service.
+# Rendered by the nginx image entrypoint (envsubst); API_UPSTREAM defaults to api:8000.
+upstream bi_api {
+    server ${API_UPSTREAM};
+}
+
+server {
+    listen 80;
+    server_name _;
+    root /usr/share/nginx/html;
+    index index.html;
+
+    client_max_body_size 110m;           # keep above MAX_UPLOAD_MB
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml text/csv;
+    gzip_min_length 1024;
+
+    location /api/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        proxy_pass http://bi_api;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_request_buffering off;     # stream large uploads
+        proxy_read_timeout 300s;         # processing very large workbooks
+    }
+
+    location /assets/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+        try_files $uri =404;
+    }
+
+    location /fonts/ {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "public, max-age=2592000";
+        try_files $uri =404;
+    }
+
+    location / {
+        include /etc/nginx/snippets/security-headers.conf;
+        add_header Cache-Control "no-cache";
+        try_files $uri /index.html;
+    }
+}

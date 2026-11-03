@@ -1,0 +1,2281 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Meridian BI API",
+  "description": "Enterprise BI platform: ingestion, data quality, KPI analytics, insights and exports.",
+  "version": "1.0.0"
+ },
+ "paths": {
+  "/api/health": {
+   "get": {
+    "tags": [
+     "system"
+    ],
+    "summary": "Health",
+    "operationId": "health_api_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Health Api Health Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/system/info": {
+   "get": {
+    "tags": [
+     "system"
+    ],
+    "summary": "System Info",
+    "operationId": "system_info_api_system_info_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response System Info Api System Info Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/uploads": {
+   "post": {
+    "tags": [
+     "ingestion"
+    ],
+    "summary": "Upload File",
+    "operationId": "upload_file_api_uploads_post",
+    "requestBody": {
+     "content": {
+      "multipart/form-data": {
+       "schema": {
+        "$ref": "#/components/schemas/Body_upload_file_api_uploads_post"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/UploadOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/uploads/{upload_id}/analysis": {
+   "get": {
+    "tags": [
+     "ingestion"
+    ],
+    "summary": "Analyze",
+    "operationId": "analyze_api_uploads__upload_id__analysis_get",
+    "parameters": [
+     {
+      "name": "upload_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Upload Id"
+      }
+     },
+     {
+      "name": "sheet",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Sheet"
+      }
+     },
+     {
+      "name": "header_row",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer",
+         "maximum": 200,
+         "minimum": 0
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Header Row"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analyze Api Uploads  Upload Id  Analysis Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets": {
+   "get": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "List Datasets",
+    "operationId": "list_datasets_api_datasets_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "additionalProperties": true,
+          "type": "object"
+         },
+         "type": "array",
+         "title": "Response List Datasets Api Datasets Get"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Create Dataset",
+    "operationId": "create_dataset_api_datasets_post",
+    "requestBody": {
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/CreateDatasetRequest"
+       }
+      }
+     },
+     "required": true
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": true,
+         "type": "object",
+         "title": "Response Create Dataset Api Datasets Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}": {
+   "get": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Get Dataset Detail",
+    "operationId": "get_dataset_detail_api_datasets__dataset_id__get",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Get Dataset Detail Api Datasets  Dataset Id  Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Patch Dataset",
+    "operationId": "patch_dataset_api_datasets__dataset_id__patch",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/DatasetPatch"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Patch Dataset Api Datasets  Dataset Id  Patch"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Remove Dataset",
+    "operationId": "remove_dataset_api_datasets__dataset_id__delete",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/quality": {
+   "get": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Dataset Quality",
+    "operationId": "dataset_quality_api_datasets__dataset_id__quality_get",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Dataset Quality Api Datasets  Dataset Id  Quality Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/capabilities": {
+   "get": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Dataset Capabilities",
+    "operationId": "dataset_capabilities_api_datasets__dataset_id__capabilities_get",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Dataset Capabilities Api Datasets  Dataset Id  Capabilities Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/filter-options": {
+   "get": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Dataset Filter Options",
+    "operationId": "dataset_filter_options_api_datasets__dataset_id__filter_options_get",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Dataset Filter Options Api Datasets  Dataset Id  Filter Options Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/search": {
+   "get": {
+    "tags": [
+     "datasets"
+    ],
+    "summary": "Search Values",
+    "operationId": "search_values_api_datasets__dataset_id__search_get",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 1,
+       "maxLength": 80,
+       "title": "Q"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "type": "object",
+          "additionalProperties": true
+         },
+         "title": "Response Search Values Api Datasets  Dataset Id  Search Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/overview": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Overview",
+    "operationId": "analytics_overview_api_datasets__dataset_id__analytics_overview_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Overview Api Datasets  Dataset Id  Analytics Overview Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/kpis": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Kpis",
+    "operationId": "analytics_kpis_api_datasets__dataset_id__analytics_kpis_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Kpis Api Datasets  Dataset Id  Analytics Kpis Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/performance": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Performance",
+    "operationId": "analytics_performance_api_datasets__dataset_id__analytics_performance_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Performance Api Datasets  Dataset Id  Analytics Performance Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/products": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Products",
+    "operationId": "analytics_products_api_datasets__dataset_id__analytics_products_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Products Api Datasets  Dataset Id  Analytics Products Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/regional": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Regional",
+    "operationId": "analytics_regional_api_datasets__dataset_id__analytics_regional_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Regional Api Datasets  Dataset Id  Analytics Regional Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/customers": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Customers",
+    "operationId": "analytics_customers_api_datasets__dataset_id__analytics_customers_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Customers Api Datasets  Dataset Id  Analytics Customers Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/financial": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Financial",
+    "operationId": "analytics_financial_api_datasets__dataset_id__analytics_financial_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Financial Api Datasets  Dataset Id  Analytics Financial Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/operations": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Operations",
+    "operationId": "analytics_operations_api_datasets__dataset_id__analytics_operations_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Operations Api Datasets  Dataset Id  Analytics Operations Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/forecast": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Forecast",
+    "operationId": "analytics_forecast_api_datasets__dataset_id__analytics_forecast_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Forecast Api Datasets  Dataset Id  Analytics Forecast Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/insights": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Insights",
+    "operationId": "analytics_insights_api_datasets__dataset_id__analytics_insights_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Insights Api Datasets  Dataset Id  Analytics Insights Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/breakdown": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Breakdown",
+    "operationId": "analytics_breakdown_api_datasets__dataset_id__analytics_breakdown_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Breakdown Api Datasets  Dataset Id  Analytics Breakdown Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/analytics/timeseries": {
+   "post": {
+    "tags": [
+     "analytics"
+    ],
+    "summary": "Analytics Timeseries",
+    "operationId": "analytics_timeseries_api_datasets__dataset_id__analytics_timeseries_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/AnalyticsRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Analytics Timeseries Api Datasets  Dataset Id  Analytics Timeseries Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/records/query": {
+   "post": {
+    "tags": [
+     "records"
+    ],
+    "summary": "Records Query",
+    "operationId": "records_query_api_datasets__dataset_id__records_query_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/RecordsQuery"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Records Query Api Datasets  Dataset Id  Records Query Post"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/records/{record_id}": {
+   "get": {
+    "tags": [
+     "records"
+    ],
+    "summary": "Record Detail",
+    "operationId": "record_detail_api_datasets__dataset_id__records__record_id__get",
+    "parameters": [
+     {
+      "name": "record_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Record Id"
+      }
+     },
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object",
+         "additionalProperties": true,
+         "title": "Response Record Detail Api Datasets  Dataset Id  Records  Record Id  Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/export": {
+   "post": {
+    "tags": [
+     "records"
+    ],
+    "summary": "Export Records",
+    "operationId": "export_records_api_datasets__dataset_id__export_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ExportRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/datasets/{dataset_id}/report": {
+   "post": {
+    "tags": [
+     "records"
+    ],
+    "summary": "Dashboard Report",
+    "operationId": "dashboard_report_api_datasets__dataset_id__report_post",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/ReportRequest"
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/presets": {
+   "get": {
+    "tags": [
+     "presets"
+    ],
+    "summary": "List Presets",
+    "operationId": "list_presets_api_presets_get",
+    "parameters": [
+     {
+      "name": "dataset_id",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Dataset Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/PresetOut"
+         },
+         "title": "Response List Presets Api Presets Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "tags": [
+     "presets"
+    ],
+    "summary": "Create Preset",
+    "operationId": "create_preset_api_presets_post",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "$ref": "#/components/schemas/PresetIn"
+       }
+      }
+     }
+    },
+    "responses": {
+     "201": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PresetOut"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/presets/{preset_id}": {
+   "delete": {
+    "tags": [
+     "presets"
+    ],
+    "summary": "Delete Preset",
+    "operationId": "delete_preset_api_presets__preset_id__delete",
+    "parameters": [
+     {
+      "name": "preset_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Preset Id"
+      }
+     }
+    ],
+    "responses": {
+     "204": {
+      "description": "Successful Response"
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "AnalyticsRequest": {
+    "properties": {
+     "filters": {
+      "$ref": "#/components/schemas/FilterSpec"
+     },
+     "granularity": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "day",
+         "week",
+         "month",
+         "quarter",
+         "year"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Granularity"
+     },
+     "dimension": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dimension"
+     },
+     "split_by": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Split By"
+     },
+     "sort_by": {
+      "type": "string",
+      "title": "Sort By",
+      "default": "revenue"
+     },
+     "limit": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Limit"
+     },
+     "ascending": {
+      "type": "boolean",
+      "title": "Ascending",
+      "default": false
+     },
+     "horizon": {
+      "type": "integer",
+      "title": "Horizon",
+      "default": 6
+     },
+     "use_ai": {
+      "type": "boolean",
+      "title": "Use Ai",
+      "default": true
+     }
+    },
+    "type": "object",
+    "title": "AnalyticsRequest"
+   },
+   "Body_upload_file_api_uploads_post": {
+    "properties": {
+     "file": {
+      "type": "string",
+      "contentMediaType": "application/octet-stream",
+      "title": "File"
+     }
+    },
+    "type": "object",
+    "required": [
+     "file"
+    ],
+    "title": "Body_upload_file_api_uploads_post"
+   },
+   "CreateDatasetRequest": {
+    "properties": {
+     "upload_id": {
+      "type": "string",
+      "title": "Upload Id"
+     },
+     "sheet": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sheet"
+     },
+     "header_row": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Header Row"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "mapping": {
+      "additionalProperties": {
+       "type": "string"
+      },
+      "type": "object",
+      "title": "Mapping"
+     },
+     "options": {
+      "$ref": "#/components/schemas/ProcessingOptions"
+     },
+     "set_default": {
+      "type": "boolean",
+      "title": "Set Default",
+      "default": true
+     }
+    },
+    "type": "object",
+    "required": [
+     "upload_id",
+     "mapping"
+    ],
+    "title": "CreateDatasetRequest"
+   },
+   "DatasetPatch": {
+    "properties": {
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "is_default": {
+      "anyOf": [
+       {
+        "type": "boolean"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Is Default"
+     }
+    },
+    "type": "object",
+    "title": "DatasetPatch"
+   },
+   "ExportRequest": {
+    "properties": {
+     "filters": {
+      "$ref": "#/components/schemas/FilterSpec"
+     },
+     "format": {
+      "type": "string",
+      "enum": [
+       "csv",
+       "xlsx"
+      ],
+      "title": "Format",
+      "default": "csv"
+     },
+     "columns": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Columns"
+     },
+     "search": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Search"
+     },
+     "include_excluded": {
+      "type": "boolean",
+      "title": "Include Excluded",
+      "default": false
+     },
+     "sort_by": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sort By"
+     },
+     "sort_dir": {
+      "type": "string",
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "title": "Sort Dir",
+      "default": "asc"
+     }
+    },
+    "type": "object",
+    "title": "ExportRequest"
+   },
+   "FilterSpec": {
+    "properties": {
+     "start_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start Date"
+     },
+     "end_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "End Date"
+     },
+     "region": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Region"
+     },
+     "country": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Country"
+     },
+     "state": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "State"
+     },
+     "city": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "City"
+     },
+     "category": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Category"
+     },
+     "subcategory": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Subcategory"
+     },
+     "product": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Product"
+     },
+     "brand": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Brand"
+     },
+     "customer_segment": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Customer Segment"
+     },
+     "business_unit": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Business Unit"
+     },
+     "channel": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Channel"
+     },
+     "customer": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Customer"
+     },
+     "comparison": {
+      "type": "string",
+      "enum": [
+       "previous_period",
+       "previous_year",
+       "none"
+      ],
+      "title": "Comparison",
+      "default": "previous_period"
+     }
+    },
+    "type": "object",
+    "title": "FilterSpec",
+    "description": "Global filters shared by every chart, KPI card, table and export."
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "PresetIn": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "dataset_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dataset Id"
+     },
+     "filters": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Filters"
+     },
+     "is_default": {
+      "type": "boolean",
+      "title": "Is Default",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "filters"
+    ],
+    "title": "PresetIn"
+   },
+   "PresetOut": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "maxLength": 120,
+      "minLength": 1,
+      "title": "Name"
+     },
+     "dataset_id": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Dataset Id"
+     },
+     "filters": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Filters"
+     },
+     "is_default": {
+      "type": "boolean",
+      "title": "Is Default",
+      "default": false
+     },
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Created At"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "filters",
+     "id",
+     "created_at"
+    ],
+    "title": "PresetOut"
+   },
+   "ProcessingOptions": {
+    "properties": {
+     "revenue_source": {
+      "type": "string",
+      "enum": [
+       "column",
+       "derived"
+      ],
+      "title": "Revenue Source",
+      "default": "column"
+     },
+     "drop_duplicates": {
+      "type": "boolean",
+      "title": "Drop Duplicates",
+      "default": true
+     },
+     "harmonize_categories": {
+      "type": "boolean",
+      "title": "Harmonize Categories",
+      "default": true
+     },
+     "trim_whitespace": {
+      "type": "boolean",
+      "title": "Trim Whitespace",
+      "default": true
+     }
+    },
+    "type": "object",
+    "title": "ProcessingOptions"
+   },
+   "RecordsQuery": {
+    "properties": {
+     "filters": {
+      "$ref": "#/components/schemas/FilterSpec"
+     },
+     "page": {
+      "type": "integer",
+      "minimum": 1.0,
+      "title": "Page",
+      "default": 1
+     },
+     "page_size": {
+      "type": "integer",
+      "maximum": 500.0,
+      "minimum": 1.0,
+      "title": "Page Size",
+      "default": 50
+     },
+     "sort_by": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Sort By"
+     },
+     "sort_dir": {
+      "type": "string",
+      "enum": [
+       "asc",
+       "desc"
+      ],
+      "title": "Sort Dir",
+      "default": "asc"
+     },
+     "search": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Search"
+     },
+     "columns": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Columns"
+     },
+     "include_excluded": {
+      "type": "boolean",
+      "title": "Include Excluded",
+      "default": false
+     },
+     "issues_only": {
+      "type": "boolean",
+      "title": "Issues Only",
+      "default": false
+     }
+    },
+    "type": "object",
+    "title": "RecordsQuery"
+   },
+   "ReportRequest": {
+    "properties": {
+     "filters": {
+      "$ref": "#/components/schemas/FilterSpec"
+     },
+     "format": {
+      "type": "string",
+      "enum": [
+       "xlsx",
+       "html"
+      ],
+      "title": "Format",
+      "default": "xlsx"
+     }
+    },
+    "type": "object",
+    "title": "ReportRequest"
+   },
+   "SheetSummary": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "rows": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Rows"
+     },
+     "columns": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Columns"
+     },
+     "header_row": {
+      "type": "integer",
+      "title": "Header Row"
+     },
+     "empty": {
+      "type": "boolean",
+      "title": "Empty",
+      "default": false
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "rows",
+     "columns",
+     "header_row"
+    ],
+    "title": "SheetSummary"
+   },
+   "UploadOut": {
+    "properties": {
+     "upload_id": {
+      "type": "string",
+      "title": "Upload Id"
+     },
+     "filename": {
+      "type": "string",
+      "title": "Filename"
+     },
+     "file_type": {
+      "type": "string",
+      "title": "File Type"
+     },
+     "size_bytes": {
+      "type": "integer",
+      "title": "Size Bytes"
+     },
+     "sheets": {
+      "items": {
+       "$ref": "#/components/schemas/SheetSummary"
+      },
+      "type": "array",
+      "title": "Sheets"
+     },
+     "recommended_sheet": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Recommended Sheet"
+     }
+    },
+    "type": "object",
+    "required": [
+     "upload_id",
+     "filename",
+     "file_type",
+     "size_bytes",
+     "sheets"
+    ],
+    "title": "UploadOut"
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   }
+  }
+ }
+}

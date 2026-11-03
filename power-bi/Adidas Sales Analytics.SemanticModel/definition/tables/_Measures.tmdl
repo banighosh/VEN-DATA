@@ -1,0 +1,376 @@
+table _Measures
+	lineageTag: ac94060a-2a57-532b-93c7-aee1feaa2935
+
+	measure 'Total Revenue' = SUM ( Sales[Total Sales] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 1. Core
+		lineageTag: bd687acb-f343-594c-ab39-7963f1f74b3c
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Units Sold' = SUM ( Sales[Units Sold] )
+		formatString: #,0
+		displayFolder: 1. Core
+		lineageTag: 9c7866e7-c30e-54b1-9457-e7e656e430f6
+
+	measure 'Operating Profit' = SUM ( Sales[Operating Profit] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 1. Core
+		lineageTag: cb32ae1f-33bf-5e2e-885d-ca1c7b351b03
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Operating Margin' = DIVIDE ( [Operating Profit], [Total Revenue] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Core
+		lineageTag: 455a38e6-505a-52b6-9551-643690a1e6a4
+
+	measure 'Implied Cost' = [Total Revenue] - [Operating Profit]
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 1. Core
+		lineageTag: cf9203e3-bb5d-57ec-a28d-1c684f32ae5d
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure Transactions = COUNTROWS ( Sales )
+		formatString: #,0
+		displayFolder: 1. Core
+		lineageTag: f8d10847-31fa-5d4d-8bb1-66ec69f3df1a
+
+	measure 'Avg Transaction Value' = DIVIDE ( [Total Revenue], [Transactions] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 1. Core
+		lineageTag: ce88d381-a7a9-5c83-803c-92803ff9d0b0
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Active Retailers' = DISTINCTCOUNT ( Sales[Retailer] )
+		formatString: 0
+		displayFolder: 1. Core
+		lineageTag: a4c5cd5a-cdca-5f29-89bd-39705cbfc97a
+
+	measure 'Units per Transaction' = DIVIDE ( [Units Sold], [Transactions] )
+		formatString: #,0.0
+		displayFolder: 1. Core
+		lineageTag: a6db3a36-7ef6-5767-80a0-c7688ab2f7a6
+
+	measure 'Revenue per Unit' = DIVIDE ( [Total Revenue], [Units Sold] )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		displayFolder: 1. Core
+		lineageTag: 989136da-dd3a-5cee-8d83-d833494c4dbe
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Revenue Share' = DIVIDE ( [Total Revenue], CALCULATE ( [Total Revenue], ALLSELECTED () ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 1. Core
+		lineageTag: a395b418-ef64-59c2-ad18-95c3bfafa2a4
+
+	measure 'Revenue PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Total Revenue], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 2. Prior year
+		lineageTag: 203406c3-f33f-54b8-8e08-77e1c8d7d114
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Units PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Units Sold], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: #,0
+		displayFolder: 2. Prior year
+		lineageTag: 61e12b7e-e4a0-5af6-a20c-c7c7c8fb6aed
+
+	measure 'Profit PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Operating Profit], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 2. Prior year
+		lineageTag: 1f5c4138-a7c8-52c7-8d6b-11e36990cd08
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Margin PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Operating Margin], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 2. Prior year
+		lineageTag: 2bebfe3f-e4cf-549d-b9b4-d2f01c92c3c5
+
+	measure 'Transactions PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Transactions], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: #,0
+		displayFolder: 2. Prior year
+		lineageTag: cb39ab12-725f-5569-9901-ee162fa52919
+
+	measure 'Avg Transaction Value PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Avg Transaction Value], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 2. Prior year
+		lineageTag: 0c88d2c6-626e-56ac-b514-a68b828b7dba
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Active Retailers PY' = IF ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1, CALCULATE ( [Active Retailers], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) ) )
+		formatString: 0
+		displayFolder: 2. Prior year
+		lineageTag: 29d40471-62fc-506c-9888-f8265f355aa3
+
+	measure 'Revenue YoY %' = DIVIDE ( [Total Revenue] - [Revenue PY], [Revenue PY] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 2. Prior year
+		lineageTag: fd1a7f5c-ac19-5e99-b492-14c4be40cb35
+
+	measure 'Profit YoY %' = DIVIDE ( [Operating Profit] - [Profit PY], [Profit PY] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 2. Prior year
+		lineageTag: ae78bc78-dbf9-506b-8a3a-308867157baf
+
+	measure 'Margin Change (pp)' = IF ( NOT ISBLANK ( [Margin PY] ), ( [Operating Margin] - [Margin PY] ) * 100 )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 2. Prior year
+		lineageTag: c83e8730-ade7-5a5f-bd10-72d4e3f3fe6f
+
+	measure 'Revenue YTD' = TOTALYTD ( [Total Revenue], 'Calendar'[Date] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 2. Prior year
+		lineageTag: c98605cd-0e10-54b5-82be-2fb2ca8ed93b
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Revenue PY YTD' = CALCULATE ( [Revenue YTD], SAMEPERIODLASTYEAR ( 'Calendar'[Date] ) )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 2. Prior year
+		lineageTag: 1678bcd2-1a56-56d5-85c7-e4191419d4b7
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Revenue vs PY' = ```
+			VAR PrevValue = [Revenue PY]
+			VAR Delta = DIVIDE ( [Total Revenue] - [Revenue PY], [Revenue PY] )
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta, "+0.0%;-0.0%;0.0%" ) & " vs prior year (" & FORMAT ( PrevValue / 1000000, "$#,0.0" ) & "M" & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 842f243c-f62e-5cf4-a01e-7ba5c128af5d
+
+	measure 'Units vs PY' = ```
+			VAR PrevValue = [Units PY]
+			VAR Delta = DIVIDE ( [Units Sold] - [Units PY], [Units PY] )
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta, "+0.0%;-0.0%;0.0%" ) & " vs prior year (" & FORMAT ( PrevValue / 1000, "#,0.0" ) & "K" & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: eb7d8ed3-8c8c-5710-899f-f93d78c6bbb0
+
+	measure 'Profit vs PY' = ```
+			VAR PrevValue = [Profit PY]
+			VAR Delta = DIVIDE ( [Operating Profit] - [Profit PY], [Profit PY] )
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta, "+0.0%;-0.0%;0.0%" ) & " vs prior year (" & FORMAT ( PrevValue / 1000000, "$#,0.0" ) & "M" & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 89d42668-3c12-5f11-84db-167728c44b3f
+
+	measure 'Margin vs PY' = ```
+			VAR PrevValue = [Margin PY]
+			VAR Delta = [Operating Margin] - [Margin PY]
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta * 100, "+0.0 pp;-0.0 pp;0.0 pp" ) & " vs prior year (" & FORMAT ( PrevValue, "0.0%" ) & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: a11f2440-01ad-52f2-a959-ecd608749595
+
+	measure 'Transactions vs PY' = ```
+			VAR PrevValue = [Transactions PY]
+			VAR Delta = DIVIDE ( [Transactions] - [Transactions PY], [Transactions PY] )
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta, "+0.0%;-0.0%;0.0%" ) & " vs prior year (" & FORMAT ( PrevValue, "#,0" ) & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 6994d589-8c07-5337-bbf9-db313c8537ba
+
+	measure 'ATV vs PY' = ```
+			VAR PrevValue = [Avg Transaction Value PY]
+			VAR Delta = DIVIDE ( [Avg Transaction Value] - [Avg Transaction Value PY], [Avg Transaction Value PY] )
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta, "+0.0%;-0.0%;0.0%" ) & " vs prior year (" & FORMAT ( PrevValue, "$#,0" ) & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 3d67a20e-6148-5eb6-864c-55c2ea5348f9
+
+	measure 'Retailers vs PY' = ```
+			VAR PrevValue = [Active Retailers PY]
+			VAR Delta = DIVIDE ( [Active Retailers] - [Active Retailers PY], [Active Retailers PY] )
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to compare",
+			        IF (
+			            ISBLANK ( PrevValue ),
+			            "No prior-year data",
+			            IF ( Delta >= 0, UNICHAR ( 9650 ), UNICHAR ( 9660 ) ) & " " & FORMAT ( Delta, "+0.0%;-0.0%;0.0%" ) & " vs prior year (" & FORMAT ( PrevValue, "#,0" ) & ")"
+			        )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 4ca5938f-6bf5-581d-96c6-36f5fa91caf8
+
+	measure 'Growth Label' = ```
+			VAR PrevValue = [Revenue PY]
+			RETURN
+			    IF (
+			        NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ),
+			        "Select one year to see growth",
+			        IF ( ISBLANK ( PrevValue ), "No prior-year data", "Revenue growth vs " & FORMAT ( MIN ( 'Calendar'[Year] ) - 1, "0" ) )
+			    )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 8ccb9ebb-dc36-59a6-86a1-0c1e03292852
+
+	measure 'Revenue Color' = ```
+			VAR PrevValue = [Revenue PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Total Revenue] - [Revenue PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: f52ad4a2-8aee-586f-b86e-9b820b5426f2
+
+	measure 'Units Color' = ```
+			VAR PrevValue = [Units PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Units Sold] - [Units PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: c28bb5db-e9ce-51f8-8aa6-a2eeffc863cb
+
+	measure 'Profit Color' = ```
+			VAR PrevValue = [Profit PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Operating Profit] - [Profit PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 362b3fde-17d2-5567-9a79-4c915ee621e1
+
+	measure 'Margin Color' = ```
+			VAR PrevValue = [Margin PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Operating Margin] - [Margin PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 70d976c1-0ae5-56a2-83a0-c53b682ab7ce
+
+	measure 'Transactions Color' = ```
+			VAR PrevValue = [Transactions PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Transactions] - [Transactions PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 96f4fac1-a2f5-5370-b0d2-286deb6fcffb
+
+	measure 'ATV Color' = ```
+			VAR PrevValue = [Avg Transaction Value PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Avg Transaction Value] - [Avg Transaction Value PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: 395d5358-d4b1-5da6-9970-4514c197fcf2
+
+	measure 'Retailers Color' = ```
+			VAR PrevValue = [Active Retailers PY]
+			RETURN
+			    IF ( ISBLANK ( PrevValue ) || NOT ( COUNTROWS ( VALUES ( 'Calendar'[Year] ) ) = 1 ), "#6F7C92", IF ( [Active Retailers] - [Active Retailers PY] >= 0, "#0B7A3B", "#B9312A" ) )
+			```
+		displayFolder: 3. KPI labels
+		lineageTag: f7a2d037-cf7a-57dc-8786-d0d4289979d9
+
+	measure 'First Purchase' = CALCULATE ( MIN ( Sales[Invoice Date] ), REMOVEFILTERS ( 'Calendar' ) )
+		formatString: dd mmm yyyy
+		displayFolder: 4. Retailers
+		lineageTag: e082e68f-6c56-56b3-aca9-4e55be93a52d
+
+	measure 'Last Purchase' = CALCULATE ( MAX ( Sales[Invoice Date] ), REMOVEFILTERS ( 'Calendar' ) )
+		formatString: dd mmm yyyy
+		displayFolder: 4. Retailers
+		lineageTag: 57fcb54e-2343-5096-9b01-ec72e4b15a55
+
+	measure 'Revenue (Price × Units)' = SUM ( Sales[Price x Units] )
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 5. Data quality
+		lineageTag: 7e622f76-df38-59a2-a327-966e3dff43ea
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Revenue Gap' = [Total Revenue] - [Revenue (Price × Units)]
+		formatString: \$#,0;(\$#,0);\$#,0
+		displayFolder: 5. Data quality
+		lineageTag: b452234b-f429-5d82-b585-6f45be1ecb81
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-US"}
+
+	measure 'Rows Failing Revenue Check' = CALCULATE ( COUNTROWS ( Sales ), Sales[Revenue Check] <> "Matches price × units" )
+		formatString: #,0
+		displayFolder: 5. Data quality
+		lineageTag: 37adcbe4-74fe-5133-a39c-964de5c3c134
+
+	measure '% Rows Failing Revenue Check' = DIVIDE ( [Rows Failing Revenue Check], [Transactions] )
+		formatString: 0.0%;-0.0%;0.0%
+		displayFolder: 5. Data quality
+		lineageTag: 0c462ac2-0b7a-59a2-985b-5605c09c16f4
+
+	column Value
+		isHidden
+		formatString: 0
+		lineageTag: 5c6a9bf7-4e4d-594b-a665-bef6b8b9e948
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Value]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition _Measures = calculated
+		mode: import
+		source = ```
+				{0}
+				```
+
+	annotation PBI_Id = 0703dbe0b2575d4ea0bab9c067b397d7

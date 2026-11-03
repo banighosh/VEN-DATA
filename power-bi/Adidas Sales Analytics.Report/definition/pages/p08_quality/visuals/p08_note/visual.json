@@ -1,0 +1,118 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.5.0/schema.json",
+  "name": "p08_note",
+  "position": {
+    "x": 16,
+    "y": 520,
+    "z": 14000,
+    "height": 184,
+    "width": 1248,
+    "tabOrder": 14000
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Findings",
+                    "textStyle": {
+                      "fontWeight": "bold",
+                      "fontSize": "11pt",
+                      "color": "#1E2532"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "1. In about 40% of rows (3,886 of 9,648), Total Sales is exactly 10× Price per Unit × Units Sold, including every In-Store row. Revenue measures use Total Sales as reported; confirm the authoritative definition with the data owner.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#4E5B70"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "2. Retailer ID is not a unique key (the same ID is shared by Foot Locker, Kohl's, Sports Direct and Walmart), so retailers are identified by name.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#4E5B70"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "3. 2021 has 8,346 transactions against 1,302 in 2020. Year-over-year growth may partly reflect how much activity was recorded.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#4E5B70"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "4. Cost is implied as Total Sales minus Operating Profit; there is no cost, budget, order ID, ship date or order status column.",
+                    "textStyle": {
+                      "fontSize": "10pt",
+                      "color": "#4E5B70"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "14D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

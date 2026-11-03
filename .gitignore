@@ -1,0 +1,9 @@
+# Power BI Desktop local cache (PBIP)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# Environment and OS files
+.env
+.DS_Store
+Thumbs.db
+~$*.xlsx

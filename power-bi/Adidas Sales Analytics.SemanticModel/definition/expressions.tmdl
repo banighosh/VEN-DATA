@@ -1,0 +1,6 @@
+/// Full path to "Adidas US Sales Datasets.xlsx". Change it in Transform data > Edit parameters.
+expression ExcelFilePath = "C:\Users\Banibrata Ghosh\Documents\Adidas Sales Power BI\Adidas US Sales Datasets.xlsx" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 9814aeec-eccf-5033-a9e1-7248e4156126
+
+	annotation PBI_ResultType = Text
+
