@@ -52,7 +52,7 @@ Open `power-bi/Adidas Sales Analytics.pbix` in Power BI Desktop. The pages cover
 
 ## Web BI platform
 
-Upload a workbook, review a data quality report, accept or adjust the suggested column mapping, then explore twelve modules. Every chart cross-filters, drills down and exports. Insights keep measured statistics separate from interpretation. The backend has 25 tests, including checks that recompute every KPI from the raw Excel file and compare it with the API.
+Upload a workbook, review a data quality report, accept or adjust the suggested column mapping, then explore nine analysis pages (overview dashboard, executive, performance, financial, customer, product, regional, operations, AI insights) and a row-level data explorer. Every chart exports to PNG and CSV and can switch to a table view; most also cross-filter the page or drill down on click. Insights keep measured statistics separate from interpretation. The backend has 25 tests, including checks that recompute the headline KPIs and breakdown totals from the raw Excel file and compare them with the API.
 
 ```bash
 cd web-platform
@@ -68,7 +68,7 @@ Architecture, API reference and configuration are in the [web platform README](w
 
 ## Data
 
-`data/Adidas US Sales Datasets.xlsx` is the publicly available Adidas US sales sample dataset, widely shared on Kaggle and data.world for analytics practice. It is used here for demonstration only.
+`data/Adidas US Sales Datasets.xlsx` is the publicly available Adidas US sales sample dataset, widely shared on Kaggle and data.world for analytics practice. It is used here for demonstration only. This project is not affiliated with or endorsed by adidas AG; the adidas name and logo are trademarks of their owner and appear only to label the dataset.
 
 ## Tools
 

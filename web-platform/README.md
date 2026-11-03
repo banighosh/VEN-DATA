@@ -1,6 +1,6 @@
 # Meridian BI
 
-An interactive business intelligence platform. Upload an Excel workbook or CSV, inspect a data quality report, map your columns to business fields, and explore executive KPIs, performance, financial, customer, product, regional and operational analytics. Every chart cross-filters, drills down and exports. An insights module separates measured statistics from interpretation.
+An interactive business intelligence platform. Upload an Excel workbook or CSV, inspect a data quality report, map your columns to business fields, and explore executive KPIs, performance, financial, customer, product, regional and operational analytics. Every chart exports to PNG and CSV and can switch to a table view; most also cross-filter the page or drill down on click. An insights module separates measured statistics from interpretation.
 
 Built and verified against the **Adidas US Sales** workbook (9,648 transactions, 2020–2021), but nothing is hard-coded to that schema: column mapping is done per upload.
 
